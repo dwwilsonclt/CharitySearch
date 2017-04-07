@@ -13,7 +13,7 @@ var endYear = 0;
 
 // queryURLBase is the start of our API endpoint. The searchTerm will be appended to this when
 // the user hits the search button
-var queryURLBase = "http://projects.propublica.org/nonprofits/api/v2/search.json?q=";
+var queryURLBase = "https://projects.propublica.org/nonprofits/api/v2/search.json?q=";
 
 // Counter to keep track of article numbers as they come in
 var articleCounter = 0;
@@ -30,11 +30,7 @@ function runQuery(queryURL) {
 
     $.ajax({
         url: queryURL,
-        method: "GET",
-        headers: {
-          'Access-Control-Request-Headers': 'x-requested-with',
-          'Access-Control-Allow-Headers': '*'
-        }
+        method: "GET"
     }).done(function(propublicaData) {
 
         // Logging the URL so we have access to it for troubleshooting
@@ -119,6 +115,7 @@ $("#run-search").on("click", function(event) {
     var queryURL = queryURLBase + searchTerm;
 
     runQuery(queryURL);
+    console.log("button clicked")
 });
 
 // This button clears the top articles section
