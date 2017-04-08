@@ -1,4 +1,4 @@
-// SETUP VARIABLES
+// SETUP VARIABLES 
 // ==========================================================
 
 // This variable will be pre-programmed with our authentication key
@@ -14,6 +14,7 @@ var endYear = 0;
 // queryURLBase is the start of our API endpoint. The searchTerm will be appended to this when
 // the user hits the search button
 var queryURLBase = "https://projects.propublica.org/nonprofits/api/v2/search.json?q=";
+
 
 // Counter to keep track of article numbers as they come in
 var articleCounter = 0;
@@ -111,7 +112,16 @@ $("#run-search").on("click", function(event) {
     $("#well-section").empty();
 
     // Grabbing text the user typed into the search input
-    searchTerm = $("#search-term").val().trim();
+    // searchTerm = $("#search-term").val().trim();
+    searchTerm = "%22Delta%20Dental%22"
+    // searchTerm = "delta%20alpha%20%2Bevanston"
+    // searchTerm = "Delta%2BDental"
+
+    // searchTerm = searchTerm + "?state%5BNY%5D"
+    searchTerm = searchTerm + "?state%5Bid%5D=NY"
+    // searchTerm = searchTerm + "?state%5Bid%5D=NY?ntee%5Bid%5D=7?c_code%5Bid%5D=3"
+    // searchTerm = "Delta+Dental"
+    // searchTerm = searchTerm + "?state[NY]?c_code=3"
     var queryURL = queryURLBase + searchTerm;
 
     runQuery(queryURL);
