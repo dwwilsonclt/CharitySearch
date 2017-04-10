@@ -12,6 +12,7 @@ var routeCounter = 0;
 var resultsRoutes = [];
 var resultsStops = [];
 var routeCounter = 0;
+
 function runQuery(queryURL) {
     $.ajax({
         url: queryURL,
@@ -43,10 +44,14 @@ function runQuery(queryURL) {
             var distanceMiles = Math.round(resultsRoutes[i].distance * .62137119)
             $("#route-well-" + routeCounter).append("<h5> Distance this route: " + distanceMiles + " miles </h5>");
             var routePrice = resultsRoutes[i].indicativePrice.price;
-            if (resultsRoutes[i].indicativePrice.currency = "USD") {
-                routePrice = "$ " + routePrice
+            if (routePrice === undefined) {
+                routePrice = "NOT AVAILABLE"
             } else {
-                routePrice = routePrice + " " + resultsRoutes[i].indicativePrice.currency
+                if (resultsRoutes[i].indicativePrice.currency = "USD") {
+                    routePrice = "$ " + routePrice
+                } else {
+                    routePrice = routePrice + " " + resultsRoutes[i].indicativePrice.currency
+                }
             }
             $("#route-well-" + routeCounter).append("<h5> Estimated price: " + routePrice + "</h5>");
             var duration = resultsRoutes[i].duration
@@ -54,16 +59,16 @@ function runQuery(queryURL) {
             durationHHMM = durationHHMM + ":" + ("0" + duration % 60).slice(-2)
             $("#route-well-" + routeCounter).append("<h5>Duration: " + durationHHMM + "</h5>");
 
-            var tableDef = "<h4><strong><i>Stops & Route Information</i></strong></h4>" + 
-                 '<table class="table">' +
-                    '<thead>' +
-                      '<tr>' +
-                        '<th>Type</th>' +
-                        '<th>Place</th>' +
-                        '<th>LL</th>' +
-                      '</tr>' +
-                    '</thead>' +
-                    '<tbody>' 
+            var tableDef = "<h4><strong><i>Stops & Route Information</i></strong></h4>" +
+                '<table class="table">' +
+                '<thead>' +
+                '<tr>' +
+                '<th>Type</th>' +
+                '<th>Place</th>' +
+                '<th>LL</th>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody>'
 
             for (var j = 0; j < resultsStops.length; j++) {
                 tableDef = tableDef + (`   
@@ -74,7 +79,7 @@ function runQuery(queryURL) {
                       </tr>
                 `)
             }
-                tableDef = tableDef + (`
+            tableDef = tableDef + (`
                 </tbody>
                 </table>
             `);
@@ -85,6 +90,7 @@ function runQuery(queryURL) {
 $("#run-search").on("click", function(event) {
     event.preventDefault();
     $("#well-section").empty();
+    routeCounter = 0;
     searchTermOrigin = $("#search-term-origin").val().trim();
     searchTermDstination = $("#search-term-destination").val().trim();
     var queryURL = queryURLBase + queryOrigin + searchTermOrigin + queryDestination + searchTermDstination;
