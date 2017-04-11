@@ -12,6 +12,7 @@ var routeCounter = 0;
 var resultsRoutes = [];
 var resultsStops = [];
 var routeCounter = 0;
+var list=[];  //holds long and lat. 
 
 function runQuery(queryURL) {
     $.ajax({
@@ -22,6 +23,8 @@ function runQuery(queryURL) {
             "Accept": "application/json"
         }
     }).done(function(travelData) {
+
+
         console.log("------------------------------------");
         console.log("URL: " + queryURL);
         console.log("------------------------------------");
@@ -29,6 +32,7 @@ function runQuery(queryURL) {
         console.log("------------------------------------");
         resultsRoutes = travelData.routes;
         console.log("resultsStops " + resultsStops)
+
         for (var i = 0; i < resultsRoutes.length; i++) {
             routeCounter++;
             resultsStops = resultsRoutes[i].stops;
@@ -58,7 +62,7 @@ function runQuery(queryURL) {
             var durationHHMM = Math.round(duration / 60);
             durationHHMM = durationHHMM + ":" + ("0" + duration % 60).slice(-2)
             $("#route-well-" + routeCounter).append("<h5>Duration: " + durationHHMM + "</h5>");
-
+           
             var tableDef = "<h4><strong><i>Stops & Route Information</i></strong></h4>" +
                 '<table class="table">' +
                 '<thead>' +
@@ -84,9 +88,57 @@ function runQuery(queryURL) {
                 </table>
             `);
             $("#route-well-" + routeCounter).append(tableDef);
-        }
+
+            //**Google Map Code **// 
+            //Inserting long and lat in list[]
+
+            if(list.length > 0 )
+                list= []; 
+
+            for (var j = 0; j < resultsStops.length; j++) {
+                    var SplitString= resultsStops[j].pos.split(",");   
+                    list.push(SplitString);             
+                    console.log(SplitString); 
+            }
+
+            /*For debuggung
+            console.log(":::::list::::"); 
+            for(var i=0; i<list.length; i++)
+                console.log(list[i][0] + list[i][1]); */ 
+
+               initMap(); 
+        }//end first for loop 
+
+            
     });
 }
+
+ function initMap() {
+
+        var uluru = {lat: 39.11417, lng: -94.62746};
+
+        var uluru2 = {lat: 32.783, lng: -96.806};
+
+        var number= "32.783"; 
+
+        var number1= "-96.806"; 
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+      
+        });
+
+        for(var i=0; i< list.length; i++){
+
+          var marker = new google.maps.Marker({
+          position: {lat: Number(list[i][0]), lng: Number(list[i][1])},
+          map: map
+        })
+      
+      }
+    }
+    
 $("#run-search").on("click", function(event) {
     event.preventDefault();
     $("#well-section").empty();

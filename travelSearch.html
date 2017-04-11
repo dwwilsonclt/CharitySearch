@@ -15,6 +15,12 @@
     .panel-body a {
       word-break: break-all;
     }
+
+    #map {
+        height: 250px;
+        width: 250px;
+       }
+
   </style>
 </head>
 
@@ -93,14 +99,16 @@
       </div>
     </div>
 
+    <div id="map">map</div>
+
   </div>
+
 
   <!-- jQuery JS -->
   <script src="https://code.jquery.com/jquery.js"></script>
-
   <!-- Code to the JavaScript File -->
   <script src="travelCode.js"></script>
-      <script async defer src="https://maps.googleapis.com/maps/api/s?key=AIzaSyBQgqk7AAGBjAUsCjOhEaL6i2i10UIzLTQ&callback=initMap"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQgqk7AAGBjAUsCjOhEaL6i2i10UIzLTQ&callback=initMap"></script>
 
 </body>
 
