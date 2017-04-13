@@ -1,0 +1,16 @@
+//**Google Map Code **// 
+            //Inserting long and lat in list[]
+
+            /*if (list.length > 0)
+                list = [];
+
+            for (var j = 0; j < resultsStops.length; j++) {
+                var SplitString = resultsStops[j].pos.split(",");
+                list.push(SplitString);
+                console.log(SplitString);
+            }*/ 
+
+            /*For debuggung
+            console.log(":::::list::::"); 
+            for(var i=0; i<list.length; i++)
+                console.log(list[i][0] + list[i][1]); */
