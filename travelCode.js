@@ -37,8 +37,36 @@ function runQuery(queryURL) {
         resultsPlaces = travelData.places;
         console.log(resultsRoutes);
         console.log(resultsPlaces);
+
+
         var latLongOrigin = resultsPlaces[0].pos.split(",");
+
         var latLongDest = resultsPlaces[1].pos.split(",");
+
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+
+        zoom: 4,
+
+        center: { lat: Number(latLongOrigin[0]), lng:Number(latLongOrigin[1])} 
+
+       });
+
+        var marker = new google.maps.Marker({
+
+            position: { lat: Number(latLongOrigin[0]), lng: Number(latLongOrigin[1]) },
+
+            map: map
+        })  
+        var marker = new google.maps.Marker({
+
+            position: { lat: Number(latLongDest[0]), lng: Number(latLongDest[1]) },
+
+            map: map
+        })
+
+
+console.log("LAT LONG INITIAL FOLLOWS:")
         console.log(latLongOrigin)
         console.log(latLongDest)
         var uluru = { lat: Number(latLongOrigin[0]), lng: Number(latLongOrigin[1]) }
@@ -98,55 +126,13 @@ function runQuery(queryURL) {
             `);
             $("#route-well-" + routeCounter).append(tableDef);
 
-            //**Google Map Code **// 
-            //Inserting long and lat in list[]
-
-            if (list.length > 0)
-                list = [];
-
-            for (var j = 0; j < resultsStops.length; j++) {
-                var SplitString = resultsStops[j].pos.split(",");
-                list.push(SplitString);
-                console.log(SplitString);
-            }
-
-            /*For debuggung
-            console.log(":::::list::::"); 
-            for(var i=0; i<list.length; i++)
-                console.log(list[i][0] + list[i][1]); */
-
-            initMap();
+            
         } //end first for loop 
 
 
     });
 }
 
-function initMap() {
-
-    var uluru = { lat: 39.11417, lng: -94.62746 };
-
-    var uluru2 = { lat: 32.783, lng: -96.806 };
-
-    var number = "32.783";
-
-    var number1 = "-96.806";
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: uluru
-
-    });
-
-    for (var i = 0; i < list.length; i++) {
-
-        var marker = new google.maps.Marker({
-            position: { lat: Number(list[i][0]), lng: Number(list[i][1]) },
-            map: map
-        })
-
-    }
-}
 
 $("#run-search").on("click", function(event) {
     event.preventDefault();
